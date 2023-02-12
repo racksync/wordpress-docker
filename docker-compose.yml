@@ -42,7 +42,7 @@ services:
     ports:
       - "8080:80"
     links:
-      - mariadb:db
+      - db:db
     networks:
       - mariadb-network
     restart: always
