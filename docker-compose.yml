@@ -1,0 +1,53 @@
+version: '3.7'
+services:
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    volumes:
+      - ./public_html:/var/www/html
+    ports:~
+      - "8000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      TZ: "Asia/Bangkok"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    networks:
+      - mariadb-network
+    restart: always
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      #PMA_HOST: mariadb
+      #PMA_USER: root
+      #PMA_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+      UPLOAD_LIMIT: 10240000
+      #PMA_ABSOLUTE_URI: https://db.domain.com
+      TZ: "Asia/Bangkok"
+    ports:
+      - "8080:80"
+    links:
+      - mariadb:db
+    networks:
+      - mariadb-network
+    restart: always
+    
+networks:
+  mariadb-network:
