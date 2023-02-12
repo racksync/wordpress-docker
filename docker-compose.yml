@@ -18,7 +18,10 @@ services:
     container_name: db
     image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
       TZ: "Asia/Bangkok"
     ports:
       - "3306:3306"
