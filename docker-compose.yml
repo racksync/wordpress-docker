@@ -13,10 +13,13 @@ services:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
+      TZ: "Asia/Bangkok"
+     networks:
+      - backend
 
   db:
     container_name: db
-    image: mariadb
+    image: mariadb:latest
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: wordpress
@@ -28,7 +31,7 @@ services:
     volumes:
       - ./data/mariadb:/var/lib/mysql
     networks:
-      - mariadb-network
+      - backend
     restart: always
 
   phpmyadmin:
@@ -46,9 +49,11 @@ services:
       - "8080:80"
     links:
       - db:db
-    networks:
-      - mariadb-network
+     networks:
+      - backend
     restart: always
     
 networks:
-  mariadb-network:
+  backend:
+    external:
+      name: backend
