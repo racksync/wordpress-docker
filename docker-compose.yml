@@ -20,7 +20,7 @@ services:
     depends_on:
       - db
     ports:
-      - 8444:80
+      - 8001:80
     container_name: phpmyadmin
     environment:
       PMA_HOST: db
@@ -38,7 +38,7 @@ services:
     volumes:
       - ./public_html:/var/www/html
     ports:
-      - 8555:80
+      - 8000:80
     container_name: wordpress
     environment:
       WORDPRESS_DB_HOST: db:3306
@@ -55,9 +55,3 @@ volumes:
 networks:
   wpnet:
     driver: bridge
-
-# To access phpMyAdmin, open http://localhost:8080 in your browser.
-# Login with the credentials defined in the environment variables.
-# Access WordPress at http://localhost:8000 through the browser.
-# To install WordPress, follow the on-screen instructions.
-
